@@ -1,0 +1,5 @@
+go 1.18
+
+use ./src/adservice
+use ./src/cartservice
+use ./src/frontend

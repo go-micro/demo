@@ -9,7 +9,10 @@ import (
 )
 
 type Config struct {
-	Port int
+	Port  int
+	Redis struct {
+		Addr string
+	}
 }
 
 var cfg *Config = &Config{
@@ -18,6 +21,10 @@ var cfg *Config = &Config{
 
 func Address() string {
 	return fmt.Sprintf(":%d", cfg.Port)
+}
+
+func RedisAddress() string {
+	return cfg.Redis.Addr
 }
 
 func Load() error {
