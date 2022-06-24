@@ -23,7 +23,7 @@ func (s *memoryCartStore) AddItem(ctx context.Context, userID, productID string,
 		} else {
 			cart[productID] = quantity
 		}
-		// s.carts[userID] = cart
+		s.carts[userID] = cart
 	} else {
 		s.carts[userID] = map[string]int32{productID: quantity}
 	}
@@ -46,7 +46,6 @@ func (s *memoryCartStore) GetCart(ctx context.Context, userID string) (*pb.Cart,
 		items := make([]*pb.CartItem, len(cart))
 		for p, q := range cart {
 			items = append(items, &pb.CartItem{ProductId: p, Quantity: q})
-
 		}
 		return &pb.Cart{UserId: userID, Items: items}, nil
 	}

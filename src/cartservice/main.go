@@ -6,6 +6,8 @@ import (
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/logger"
 
+	"github.com/go-micro/demo/cartservice/cartstore"
+	"github.com/go-micro/demo/cartservice/config"
 	"github.com/go-micro/demo/cartservice/handler"
 	pb "github.com/go-micro/demo/cartservice/proto"
 )
@@ -17,16 +19,11 @@ var (
 
 func main() {
 	// Create service
-	srv := micro.NewService(
-		micro.Server(grpcs.NewServer()),
-		micro.Client(grpcc.NewClient()),
-		micro.Name(service),
-		micro.Version(version),
-	)
-	srv.Init()
+	srv := micro.NewService(micro.Server(grpcs.NewServer()), micro.Client(grpcc.NewClient()))
+	srv.Init(micro.Name(service), micro.Version(version), micro.Address(config.Address()))
 
-	// Register handler
-	pb.RegisterCartServiceHandler(srv.Server(), new(handler.CartService))
+	// Register handle
+	pb.RegisterCartServiceHandler(srv.Server(), &handler.CartService{Store: cartstore.NewMemoryCartStore()})
 	pb.RegisterHealthHandler(srv.Server(), new(handler.Health))
 
 	// Run service

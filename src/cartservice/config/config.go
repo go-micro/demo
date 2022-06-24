@@ -16,7 +16,7 @@ type Config struct {
 }
 
 var cfg *Config = &Config{
-	Port: 9555,
+	Port: 7070,
 }
 
 func Address() string {
