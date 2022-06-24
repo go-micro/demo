@@ -37,14 +37,14 @@ func (s *CheckoutService) PlaceOrder(ctx context.Context, in *pb.PlaceOrderReque
 		return status.Errorf(codes.Internal, err.Error())
 	}
 
-	total := pb.Money{CurrencyCode: in.UserCurrency, Units: 0, Nanos: 0}
-	total = money.Must(money.Sum(total, *prep.shippingCostLocalized))
+	total := &pb.Money{CurrencyCode: in.UserCurrency, Units: 0, Nanos: 0}
+	total = money.Must(money.Sum(total, prep.shippingCostLocalized))
 	for _, it := range prep.orderItems {
-		multPrice := money.MultiplySlow(*it.Cost, uint32(it.GetItem().GetQuantity()))
+		multPrice := money.MultiplySlow(it.Cost, uint32(it.GetItem().GetQuantity()))
 		total = money.Must(money.Sum(total, multPrice))
 	}
 
-	txID, err := s.chargeCard(ctx, &total, in.CreditCard)
+	txID, err := s.chargeCard(ctx, total, in.CreditCard)
 	if err != nil {
 		logger.Error(err)
 		return status.Errorf(codes.Internal, "failed to charge card: %+v", err)
