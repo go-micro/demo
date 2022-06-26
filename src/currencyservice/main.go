@@ -1,21 +1,18 @@
 package main
 
 import (
-	"log"
-
 	grpcc "github.com/go-micro/plugins/v4/client/grpc"
 	grpcs "github.com/go-micro/plugins/v4/server/grpc"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/logger"
 
-	"github.com/go-micro/demo/cartservice/cartstore"
-	"github.com/go-micro/demo/cartservice/config"
-	"github.com/go-micro/demo/cartservice/handler"
-	pb "github.com/go-micro/demo/cartservice/proto"
+	"github.com/go-micro/demo/currencyservice/config"
+	"github.com/go-micro/demo/currencyservice/handler"
+	pb "github.com/go-micro/demo/currencyservice/proto"
 )
 
 var (
-	service = "cartservice"
+	service = "currencyservice"
 	version = "1.0.0"
 )
 
@@ -31,12 +28,12 @@ func main() {
 		micro.Address(config.Address()),
 	)
 
-	// Register handle
-	if err := pb.RegisterCartServiceHandler(srv.Server(), &handler.CartService{Store: cartstore.NewMemoryCartStore()}); err != nil {
-		log.Fatal(err)
+	// Register handler
+	if err := pb.RegisterCurrencyServiceHandler(srv.Server(), new(handler.CurrencyService)); err != nil {
+		logger.Fatal(err)
 	}
 	if err := pb.RegisterHealthHandler(srv.Server(), new(handler.Health)); err != nil {
-		log.Fatal(err)
+		logger.Fatal(err)
 	}
 
 	// Run service

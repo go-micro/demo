@@ -5,7 +5,7 @@
 *.so
 *.dylib
 
-# Test binary, built with `go test -c`
+# Test binary, built with 'go test -c'
 *.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE
@@ -14,8 +14,5 @@
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
-# IDE
-.vscode
-
 # don't commit the service binary to vcs
-cartservice
+currencyservice
