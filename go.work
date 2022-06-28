@@ -8,4 +8,5 @@ use (
 	./src/emailservice
 	./src/frontend
 	./src/paymentservice
+	./src/productcatalogservice
 )
