@@ -43,7 +43,7 @@ func (s *memoryCartStore) GetCart(ctx context.Context, userID string) (*pb.Cart,
 	defer s.RUnlock()
 
 	if cart, ok := s.carts[userID]; ok {
-		items := make([]*pb.CartItem, len(cart))
+		items := make([]*pb.CartItem, 0, len(cart))
 		for p, q := range cart {
 			items = append(items, &pb.CartItem{ProductId: p, Quantity: q})
 		}

@@ -17,7 +17,7 @@ func (s *AdService) GetAds(ctx context.Context, in *pb.AdRequest, out *pb.AdResp
 	allAds := make([]*pb.Ad, 0)
 	if len(in.ContextKeys) > 0 {
 		for _, category := range in.ContextKeys {
-			ads := adsMap[category]
+			ads := getAdsByCategory(category)
 			allAds = append(allAds, ads...)
 		}
 		if len(allAds) == 0 {
@@ -26,6 +26,7 @@ func (s *AdService) GetAds(ctx context.Context, in *pb.AdRequest, out *pb.AdResp
 	} else {
 		allAds = getRandomAds()
 	}
+	out.Ads = allAds
 	return nil
 }
 

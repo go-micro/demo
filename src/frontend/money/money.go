@@ -99,7 +99,7 @@ func Sum(l, r *pb.Money) (*pb.Money, error) {
 	units := l.GetUnits() + r.GetUnits()
 	nanos := l.GetNanos() + r.GetNanos()
 
-	if (units == 0 && nanos == 0) || (units > 0 && nanos >= 0) || (units < 0 && nanos <= 0) {
+	if (units == 0 && nanos == 0) || (units >= 0 && nanos >= 0) || (units < 0 && nanos <= 0) {
 		// same sign <units, nanos>
 		units += int64(nanos / nanosMod)
 		nanos = nanos % nanosMod

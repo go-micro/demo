@@ -5,7 +5,6 @@ import (
 	_ "github.com/go-micro/plugins/v4/registry/etcd"
 	_ "github.com/go-micro/plugins/v4/registry/kubernetes"
 	grpcs "github.com/go-micro/plugins/v4/server/grpc"
-
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/logger"
 

@@ -291,7 +291,8 @@ func (fe *frontendServer) viewCartHandler(w http.ResponseWriter, r *http.Request
 		items[i] = cartItemView{
 			Item:     p,
 			Quantity: item.GetQuantity(),
-			Price:    multPrice}
+			Price:    multPrice,
+		}
 		totalPrice = money.Must(money.Sum(totalPrice, multPrice))
 	}
 	totalPrice = money.Must(money.Sum(totalPrice, shippingCost))
@@ -329,7 +330,7 @@ func (fe *frontendServer) placeOrderHandler(w http.ResponseWriter, r *http.Reque
 		city          = r.FormValue("city")
 		state         = r.FormValue("state")
 		country       = r.FormValue("country")
-		ccNumber      = r.FormValue("credit_card_number")
+		ccNumber      = strings.ReplaceAll(r.FormValue("credit_card_number"), "-", "")
 		ccMonth, _    = strconv.ParseInt(r.FormValue("credit_card_expiration_month"), 10, 32)
 		ccYear, _     = strconv.ParseInt(r.FormValue("credit_card_expiration_year"), 10, 32)
 		ccCVV, _      = strconv.ParseInt(r.FormValue("credit_card_cvv"), 10, 32)
@@ -431,6 +432,9 @@ func (fe *frontendServer) chooseAd(ctx context.Context, ctxKeys []string, log lo
 		log.WithField("error", err).Warn("failed to retrieve ads")
 		return nil
 	}
+	if len(ads) == 0 {
+		return nil
+	}
 	return ads[rand.Intn(len(ads))]
 }
 
@@ -485,7 +489,7 @@ func cartSize(c []*pb.CartItem) int {
 	return cartSize
 }
 
-func renderMoney(money pb.Money) string {
+func renderMoney(money *pb.Money) string {
 	currencyLogo := renderCurrencyLogo(money.GetCurrencyCode())
 	return fmt.Sprintf("%s%d.%02d", currencyLogo, money.GetUnits(), money.GetNanos()/10000000)
 }
