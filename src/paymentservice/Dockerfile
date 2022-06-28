@@ -23,6 +23,6 @@ FROM scratch
 
 COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 COPY --from=build /bin/grpc_health_probe /bin/
-COPY --from=builder /go/src/hipstershop/emailservice /hipstershop
+COPY --from=builder /go/src/hipstershop/paymentservice /hipstershop
 
-ENTRYPOINT ["/hipstershop/emailservice"]
+ENTRYPOINT ["/hipstershop/paymentservice"]

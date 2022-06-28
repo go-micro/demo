@@ -7,4 +7,5 @@ use (
 	./src/currencyservice
 	./src/emailservice
 	./src/frontend
+	./src/paymentservice
 )
