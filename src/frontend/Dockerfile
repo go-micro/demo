@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM golang:1.18.3-alpine as builder
+FROM golang:alpine as builder
 RUN apk add --no-cache ca-certificates git
 RUN apk add build-base
 WORKDIR /src

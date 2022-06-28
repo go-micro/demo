@@ -45,6 +45,7 @@ func (s *ProductCatalogService) GetProduct(ctx context.Context, in *pb.GetProduc
 	out.Categories = found.Categories
 	out.Description = found.Description
 	out.Picture = found.Picture
+	out.PriceUsd = found.PriceUsd
 	return nil
 }
 
@@ -69,7 +70,7 @@ func (s *ProductCatalogService) readCatalogFile() (*pb.ListProductsResponse, err
 		logger.Errorf("failed to open product catalog json file: %v", err)
 		return nil, err
 	}
-	var catalog *pb.ListProductsResponse
+	catalog := &pb.ListProductsResponse{}
 	if err := protojson.Unmarshal(catalogJSON, catalog); err != nil {
 		logger.Warnf("failed to parse the catalog JSON: %v", err)
 		return nil, err

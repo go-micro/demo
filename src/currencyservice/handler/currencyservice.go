@@ -19,7 +19,7 @@ func (s *CurrencyService) GetSupportedCurrencies(ctx context.Context, in *pb.Emp
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to load currency data: %+v", err)
 	}
-	var currencies map[string]float32
+	currencies := make(map[string]float32)
 	if err := json.Unmarshal(data, &currencies); err != nil {
 		return status.Errorf(codes.Internal, "failed to unmarshal currency data: %+v", err)
 	}
@@ -35,7 +35,7 @@ func (s *CurrencyService) Convert(ctx context.Context, in *pb.CurrencyConversion
 	if err != nil {
 		return status.Errorf(codes.Internal, "failed to load currency data: %+v", err)
 	}
-	var currencies map[string]float64
+	currencies := make(map[string]float64)
 	if err := json.Unmarshal(data, &currencies); err != nil {
 		return status.Errorf(codes.Internal, "failed to unmarshal currency data: %+v", err)
 	}

@@ -1,21 +1,31 @@
 package config
 
 import (
-	"fmt"
-
 	"github.com/pkg/errors"
 	"go-micro.dev/v4/config"
 	"go-micro.dev/v4/config/source/env"
 )
 
 type Config struct {
-	Port                  int
+	Address               string
+	AdService             string
+	CartService           string
+	CheckoutService       string
+	CurrencyService       string
 	ProductCatalogService string
+	RecommendationService string
+	ShippingService       string
 }
 
 var cfg *Config = &Config{
-	Port:                  8080,
+	Address:               ":80",
+	AdService:             "adservice",
+	CartService:           "cartservice",
+	CheckoutService:       "checkoutservice",
+	CurrencyService:       "currencyservice",
 	ProductCatalogService: "productcatalogservice",
+	RecommendationService: "recommendationservice",
+	ShippingService:       "shippingservice",
 }
 
 func Get() Config {
@@ -23,7 +33,7 @@ func Get() Config {
 }
 
 func Address() string {
-	return fmt.Sprintf(":%d", cfg.Port)
+	return cfg.Address
 }
 
 func Load() error {

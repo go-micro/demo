@@ -2,20 +2,17 @@ package main
 
 import (
 	grpcc "github.com/go-micro/plugins/v4/client/grpc"
-	_ "github.com/go-micro/plugins/v4/registry/etcd"
-	_ "github.com/go-micro/plugins/v4/registry/kubernetes"
 	grpcs "github.com/go-micro/plugins/v4/server/grpc"
-
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/logger"
 
-	"github.com/go-micro/demo/recommendationservice/config"
-	"github.com/go-micro/demo/recommendationservice/handler"
-	pb "github.com/go-micro/demo/recommendationservice/proto"
+	"github.com/go-micro/demo/shippingservice/config"
+	"github.com/go-micro/demo/shippingservice/handler"
+	pb "github.com/go-micro/demo/shippingservice/proto"
 )
 
 var (
-	service = "recommendationservice"
+	service = "shippingservice"
 	version = "1.0.0"
 )
 
@@ -37,11 +34,7 @@ func main() {
 	)
 
 	// Register handler
-	cfg, client := config.Get(), srv.Client()
-	recommendationservice := &handler.RecommendationService{
-		ProductCatalogService: pb.NewProductCatalogService(cfg.ProductCatalogService, client),
-	}
-	if err := pb.RegisterRecommendationServiceHandler(srv.Server(), recommendationservice); err != nil {
+	if err := pb.RegisterShippingServiceHandler(srv.Server(), new(handler.ShippingService)); err != nil {
 		logger.Fatal(err)
 	}
 	if err := pb.RegisterHealthHandler(srv.Server(), new(handler.Health)); err != nil {

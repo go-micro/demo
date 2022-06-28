@@ -274,7 +274,7 @@ func (fe *frontendServer) viewCartHandler(w http.ResponseWriter, r *http.Request
 		Price    *pb.Money
 	}
 	items := make([]cartItemView, len(cart))
-	totalPrice := pb.Money{CurrencyCode: currentCurrency(r)}
+	totalPrice := &pb.Money{CurrencyCode: currentCurrency(r)}
 	for i, item := range cart {
 		p, err := fe.getProduct(r.Context(), item.GetProductId())
 		if err != nil {
@@ -287,14 +287,14 @@ func (fe *frontendServer) viewCartHandler(w http.ResponseWriter, r *http.Request
 			return
 		}
 
-		multPrice := money.MultiplySlow(*price, uint32(item.GetQuantity()))
+		multPrice := money.MultiplySlow(price, uint32(item.GetQuantity()))
 		items[i] = cartItemView{
 			Item:     p,
 			Quantity: item.GetQuantity(),
-			Price:    &multPrice}
+			Price:    multPrice}
 		totalPrice = money.Must(money.Sum(totalPrice, multPrice))
 	}
-	totalPrice = money.Must(money.Sum(totalPrice, *shippingCost))
+	totalPrice = money.Must(money.Sum(totalPrice, shippingCost))
 	year := time.Now().Year()
 
 	if err := templates.ExecuteTemplate(w, "cart", map[string]interface{}{
@@ -335,23 +335,22 @@ func (fe *frontendServer) placeOrderHandler(w http.ResponseWriter, r *http.Reque
 		ccCVV, _      = strconv.ParseInt(r.FormValue("credit_card_cvv"), 10, 32)
 	)
 
-	order, err := pb.NewCheckoutServiceClient(fe.checkoutSvcConn).
-		PlaceOrder(r.Context(), &pb.PlaceOrderRequest{
-			Email: email,
-			CreditCard: &pb.CreditCardInfo{
-				CreditCardNumber:          ccNumber,
-				CreditCardExpirationMonth: int32(ccMonth),
-				CreditCardExpirationYear:  int32(ccYear),
-				CreditCardCvv:             int32(ccCVV)},
-			UserId:       sessionID(r),
-			UserCurrency: currentCurrency(r),
-			Address: &pb.Address{
-				StreetAddress: streetAddress,
-				City:          city,
-				State:         state,
-				ZipCode:       int32(zipCode),
-				Country:       country},
-		})
+	order, err := fe.checkoutService.PlaceOrder(r.Context(), &pb.PlaceOrderRequest{
+		Email: email,
+		CreditCard: &pb.CreditCardInfo{
+			CreditCardNumber:          ccNumber,
+			CreditCardExpirationMonth: int32(ccMonth),
+			CreditCardExpirationYear:  int32(ccYear),
+			CreditCardCvv:             int32(ccCVV)},
+		UserId:       sessionID(r),
+		UserCurrency: currentCurrency(r),
+		Address: &pb.Address{
+			StreetAddress: streetAddress,
+			City:          city,
+			State:         state,
+			ZipCode:       int32(zipCode),
+			Country:       country},
+	})
 	if err != nil {
 		renderHTTPError(log, r, w, errors.Wrap(err, "failed to complete the order"), http.StatusInternalServerError)
 		return
@@ -361,9 +360,9 @@ func (fe *frontendServer) placeOrderHandler(w http.ResponseWriter, r *http.Reque
 	order.GetOrder().GetItems()
 	recommendations, _ := fe.getRecommendations(r.Context(), sessionID(r), nil)
 
-	totalPaid := *order.GetOrder().GetShippingCost()
+	totalPaid := order.GetOrder().GetShippingCost()
 	for _, v := range order.GetOrder().GetItems() {
-		multPrice := money.MultiplySlow(*v.GetCost(), uint32(v.GetItem().GetQuantity()))
+		multPrice := money.MultiplySlow(v.GetCost(), uint32(v.GetItem().GetQuantity()))
 		totalPaid = money.Must(money.Sum(totalPaid, multPrice))
 	}
 

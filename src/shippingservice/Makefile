@@ -4,11 +4,13 @@ GOPATH:=$(shell go env GOPATH)
 init:
 	@go get -u google.golang.org/protobuf/proto
 	@go install github.com/golang/protobuf/protoc-gen-go@latest
-	@go install github.com/asim/go-micro/cmd/protoc-gen-micro/v4@latest
+	@go install go-micro.dev/v4/cmd/protoc-gen-micro@v4
 
 .PHONY: proto
 proto:
-	@protoc --proto_path=. --micro_out=. --go_out=:. proto/hipstershop.proto
+	@protoc --proto_path=. --micro_out=. --go_out=:. proto/shippingservice.proto
+	@protoc --proto_path=. --micro_out=. --go_out=:. proto/health.proto
+	
 
 .PHONY: update
 update:
@@ -20,7 +22,7 @@ tidy:
 
 .PHONY: build
 build:
-	@go build -o frontend *.go
+	@go build -o shippingservice *.go
 
 .PHONY: test
 test:
@@ -28,4 +30,4 @@ test:
 
 .PHONY: docker
 docker:
-	@docker build -t frontend:latest .
+	@docker build -t shippingservice:latest .

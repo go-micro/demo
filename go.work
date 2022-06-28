@@ -10,4 +10,5 @@ use (
 	./src/paymentservice
 	./src/productcatalogservice
 	./src/recommendationservice
+	./src/shippingservice
 )
