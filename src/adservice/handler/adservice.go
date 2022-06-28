@@ -29,11 +29,6 @@ func (s *AdService) GetAds(ctx context.Context, in *pb.AdRequest, out *pb.AdResp
 	return nil
 }
 
-func (s *AdService) Check(ctx context.Context, in *pb.HealthCheckRequest, out *pb.HealthCheckResponse) error {
-	out.Status = pb.HealthCheckResponse_SERVING
-	return nil
-}
-
 func getAdsByCategory(category string) []*pb.Ad {
 	return adsMap[category]
 }

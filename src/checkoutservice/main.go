@@ -12,18 +12,23 @@ import (
 )
 
 var (
-	service = "checkoutservice"
+	name    = "checkoutservice"
 	version = "latest"
 )
 
 func main() {
+	// Load conigurations
+	if err := config.Load(); err != nil {
+		logger.Fatal(err)
+	}
+
 	// Create service
 	srv := micro.NewService(
 		micro.Server(grpcs.NewServer()),
 		micro.Client(grpcc.NewClient()),
 	)
 	srv.Init(
-		micro.Name(service),
+		micro.Name(name),
 		micro.Version(version),
 		micro.Address(config.Address()),
 	)

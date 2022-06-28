@@ -15,23 +15,28 @@ import (
 )
 
 var (
-	service = "cartservice"
+	name    = "cartservice"
 	version = "1.0.0"
 )
 
 func main() {
+	// Load conigurations
+	if err := config.Load(); err != nil {
+		logger.Fatal(err)
+	}
+
 	// Create service
 	srv := micro.NewService(
 		micro.Server(grpcs.NewServer()),
 		micro.Client(grpcc.NewClient()),
 	)
 	srv.Init(
-		micro.Name(service),
+		micro.Name(name),
 		micro.Version(version),
 		micro.Address(config.Address()),
 	)
 
-	// Register handle
+	// Register handler
 	if err := pb.RegisterCartServiceHandler(srv.Server(), &handler.CartService{Store: cartstore.NewMemoryCartStore()}); err != nil {
 		log.Fatal(err)
 	}
