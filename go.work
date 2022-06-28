@@ -9,4 +9,5 @@ use (
 	./src/frontend
 	./src/paymentservice
 	./src/productcatalogservice
+	./src/recommendationservice
 )

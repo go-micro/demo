@@ -9,11 +9,17 @@ import (
 )
 
 type Config struct {
-	Port int
+	Port                  int
+	ProductCatalogService string
 }
 
 var cfg *Config = &Config{
-	Port: 5000,
+	Port:                  7070,
+	ProductCatalogService: "productcatalogservie",
+}
+
+func Get() Config {
+	return *cfg
 }
 
 func Address() string {
