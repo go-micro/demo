@@ -64,6 +64,8 @@ github.com/go-git/go-git/v5 v5.4.2 h1:BXyZu9t0VkbiHtqrsvdq39UDhGJTl1h55VW6CSC4aY
 github.com/go-git/go-git/v5 v5.4.2/go.mod h1:gQ1kArt6d+n+BGd+/B/I74HwRTLhth2+zti4ihgckDc=
 github.com/go-micro/plugins/v4/client/grpc v1.0.0 h1:OAQBt3gT8JBhJ3u8TFJwMP9XcvLFGy4bJU+fAUYTLIc=
 github.com/go-micro/plugins/v4/client/grpc v1.0.0/go.mod h1:LmO2jnrlbHkfI3/E7fo8bgE6mDk0L0LVQyKR7crOkX8=
+github.com/go-micro/plugins/v4/registry/kubernetes v1.0.0 h1:C/6cWtwXw2eMVupDU0kY6zo60ZGemWdGBZtOc6LOEKQ=
+github.com/go-micro/plugins/v4/registry/kubernetes v1.0.0/go.mod h1:zRn2eRRSu/Jql5pPesOjTUnedYSlml9rMVpCzw8Zvng=
 github.com/go-micro/plugins/v4/server/grpc v1.0.1 h1:lVaVm1HE6PqoQlFvPpHJshJKOWgTCm9yUTQaAMlvLkw=
 github.com/go-micro/plugins/v4/server/grpc v1.0.1/go.mod h1:+eiInCaAvLiDSY4QGwIr+Z44gLZAsQSXIN42BJViR90=
 github.com/go-micro/plugins/v4/transport/grpc v1.0.0 h1:QbwEGFo9tiDwqJWZ37FJ8gK5xnApy47EnKcmQWRRSJs=

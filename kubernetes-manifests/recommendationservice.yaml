@@ -25,7 +25,7 @@ spec:
       labels:
         app: recommendationservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
@@ -43,21 +43,23 @@ spec:
           env:
             - name: PORT
               value: "8080"
-            - name: PRODUCT_CATALOG_SERVICE_ADDR
-              value: "productcatalogservice:3550"
-            - name: DISABLE_TRACING
-              value: "1"
-            - name: DISABLE_PROFILER
-              value: "1"
-            - name: DISABLE_DEBUGGER
-              value: "1"
-          resources:
-            requests:
-              cpu: 100m
-              memory: 220Mi
-            limits:
-              cpu: 200m
-              memory: 450Mi
+            - name: MICRO_REGISTRY_ADDRESS
+              value: "kubernetes"
+            - name: PRODUCTCATALOGSERVICE
+              value: "productcatalogservice"
+            # - name: DISABLE_TRACING
+            #   value: "1"
+            # - name: DISABLE_PROFILER
+            #   value: "1"
+            # - name: DISABLE_DEBUGGER
+            #   value: "1"
+          # resources:
+          #   requests:
+          #     cpu: 100m
+          #     memory: 64Mi
+          #   limits:
+          #     cpu: 200m
+          #     memory: 128Mi
 ---
 apiVersion: v1
 kind: Service

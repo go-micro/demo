@@ -1,21 +1,7 @@
-# Copyright 2021 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-apiVersion: skaffold/v2beta18
+apiVersion: skaffold/v2beta27
 kind: Config
 metadata:
-  name: app
+  name: hipstershop
 build:
   artifacts:
     # image tags are relative; to specify an image repo (e.g. GCR), you
@@ -37,7 +23,7 @@ build:
     - image: currencyservice
       context: src/currencyservice
     - image: cartservice
-      context: src/cartservice/src
+      context: src/cartservice
       docker:
         dockerfile: Dockerfile
     - image: frontend
@@ -48,6 +34,7 @@ build:
     gitCommit: {}
   local:
     useBuildkit: false
+    concurrency: 10
 deploy:
   kubectl:
     manifests:
@@ -60,28 +47,28 @@ deploy:
       - ./kubernetes-manifests/paymentservice.yaml
       - ./kubernetes-manifests/productcatalogservice.yaml
       - ./kubernetes-manifests/recommendationservice.yaml
-      - ./kubernetes-manifests/redis.yaml
       - ./kubernetes-manifests/shippingservice.yaml
-profiles:
-  # "debug" profile replaces the default Dockerfile in cartservice with Dockerfile.debug,
-  # which enables debugging via skaffold.
-  #
-  # This profile is used by default when running skaffold debug.
-  - name: debug
-    activation:
-      - command: debug
-    patches:
-      - op: replace
-        path: /build/artifacts/7/docker/dockerfile
-        value: Dockerfile.debug
+      - ./kubernetes-manifests/gomicro.yaml
+# profiles:
+#   # "debug" profile replaces the default Dockerfile in cartservice with Dockerfile.debug,
+#   # which enables debugging via skaffold.
+#   #
+#   # This profile is used by default when running skaffold debug.
+#   - name: debug
+#     activation:
+#       - command: debug
+#     patches:
+#       - op: replace
+#         path: /build/artifacts/7/docker/dockerfile
+#         value: Dockerfile.debug
 
 ---
-apiVersion: skaffold/v2beta18
+apiVersion: skaffold/v2beta27
 kind: Config
 metadata:
   name: loadgenerator
 requires:
-  - configs: [app]
+  - configs: [hipstershop]
 build:
   artifacts:
     - image: loadgenerator

@@ -1,36 +1,27 @@
-# Copyright 2020 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
+FROM golang:alpine AS builder
 
-FROM golang:alpine as builder
-RUN apk add --no-cache ca-certificates git
-RUN apk add build-base
-WORKDIR /src
+# Set Go env
+ENV CGO_ENABLED=0 GOOS=linux
+WORKDIR /go/src/hipstershop
 
-# restore dependencies
-COPY go.mod go.sum ./
-RUN go mod download
+# Install dependencies
+RUN apk --update --no-cache add ca-certificates make protoc
+
+# Build Go binary
+COPY Makefile go.mod go.sum ./
+RUN go env -w GOPROXY=https://goproxy.io,direct/
+RUN make init && go mod download
 COPY . .
+RUN make proto tidy
 
 # Skaffold passes in debug-oriented compiler flags
 ARG SKAFFOLD_GO_GCFLAGS
-RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /go/bin/frontend .
+RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /go/src/hipstershop/frontend . 
 
-FROM alpine as release
-RUN apk add --no-cache ca-certificates \
-    busybox-extras net-tools bind-tools
-WORKDIR /src
-COPY --from=builder /go/bin/frontend /src/server
+# Deployment container
+FROM scratch
+
+COPY --from=builder /go/src/hipstershop/frontend /hipstershop/frontend
 COPY ./templates ./templates
 COPY ./static ./static
 
@@ -39,5 +30,4 @@ COPY ./static ./static
 # See https://golang.org/pkg/runtime/
 ENV GOTRACEBACK=single
 
-EXPOSE 8080
-ENTRYPOINT ["/src/server"]
+ENTRYPOINT ["/hipstershop/frontend"]

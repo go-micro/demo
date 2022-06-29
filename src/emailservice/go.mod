@@ -4,7 +4,9 @@ go 1.18
 
 require (
 	github.com/go-micro/plugins/v4/client/grpc v1.0.0
+	github.com/go-micro/plugins/v4/registry/kubernetes v1.0.0
 	github.com/go-micro/plugins/v4/server/grpc v1.0.1
+	github.com/pkg/errors v0.9.1
 	go-micro.dev/v4 v4.7.0
 	google.golang.org/grpc v1.47.0
 	google.golang.org/protobuf v1.27.1
@@ -31,7 +33,6 @@ require (
 	github.com/nxadm/tail v1.4.8 // indirect
 	github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c // indirect
 	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
-	github.com/pkg/errors v0.9.1 // indirect
 	github.com/russross/blackfriday/v2 v2.0.1 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect

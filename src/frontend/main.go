@@ -7,7 +7,6 @@ import (
 	"time"
 
 	mgrpc "github.com/go-micro/plugins/v4/client/grpc"
-	_ "github.com/go-micro/plugins/v4/registry/etcd"
 	_ "github.com/go-micro/plugins/v4/registry/kubernetes"
 	mhttp "github.com/go-micro/plugins/v4/server/http"
 	"github.com/gorilla/mux"

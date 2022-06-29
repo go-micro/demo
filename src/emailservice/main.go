@@ -2,12 +2,12 @@ package main
 
 import (
 	grpcc "github.com/go-micro/plugins/v4/client/grpc"
-	_ "github.com/go-micro/plugins/v4/registry/etcd"
 	_ "github.com/go-micro/plugins/v4/registry/kubernetes"
 	grpcs "github.com/go-micro/plugins/v4/server/grpc"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/logger"
 
+	"github.com/go-micro/demo/emailservice/config"
 	"github.com/go-micro/demo/emailservice/handler"
 	pb "github.com/go-micro/demo/emailservice/proto"
 )
@@ -18,6 +18,11 @@ var (
 )
 
 func main() {
+	// Load conigurations
+	if err := config.Load(); err != nil {
+		logger.Fatal(err)
+	}
+
 	// Create service
 	srv := micro.NewService(
 		micro.Server(grpcs.NewServer()),
@@ -26,6 +31,7 @@ func main() {
 	srv.Init(
 		micro.Name(service),
 		micro.Version(version),
+		micro.Address(config.Address()),
 	)
 
 	// Register handler

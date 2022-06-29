@@ -27,7 +27,7 @@ spec:
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro 
       terminationGracePeriodSeconds: 5
       restartPolicy: Always
       initContainers:
@@ -54,10 +54,10 @@ spec:
               value: "frontend:80"
             - name: USERS
               value: "10"
-          resources:
-            requests:
-              cpu: 300m
-              memory: 256Mi
-            limits:
-              cpu: 500m
-              memory: 512Mi
+          # resources:
+          #   requests:
+          #     cpu: 100m
+          #     memory: 64Mi
+          #   limits:
+          #     cpu: 200m
+          #     memory: 128Mi

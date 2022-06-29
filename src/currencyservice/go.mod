@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/go-micro/plugins/v4/client/grpc v1.0.0
+	github.com/go-micro/plugins/v4/registry/kubernetes v1.0.0
 	github.com/go-micro/plugins/v4/server/grpc v1.0.1
 	github.com/pkg/errors v0.9.1
 	go-micro.dev/v4 v4.7.0

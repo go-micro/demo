@@ -2,10 +2,10 @@ FROM golang:alpine AS builder
 
 # Set Go env
 ENV CGO_ENABLED=0 GOOS=linux
-WORKDIR /go/src/shippingservice
+WORKDIR /go/src/hipstershop
 
 # Install dependencies
-RUN apk --update --no-cache add ca-certificates gcc libtool make musl-dev protoc git
+RUN apk --update --no-cache add ca-certificates make protoc
 
 # Download grpc_health_probe
 RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
@@ -14,16 +14,25 @@ chmod +x /bin/grpc_health_probe
 
 # Build Go binary
 COPY Makefile go.mod go.sum ./
+RUN go env -w GOPROXY=https://goproxy.io,direct/
 RUN make init && go mod download 
 COPY . .
-RUN make proto tidy build
+RUN make proto tidy
+
+# Skaffold passes in debug-oriented compiler flags
+ARG SKAFFOLD_GO_GCFLAGS
+RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /go/src/hipstershop/shippingservice . 
 
 # Deployment container
 FROM scratch
 
-COPY --from=builder /etc/ssl/certs /etc/ssl/certs
-COPY --from=build /bin/grpc_health_probe /bin/
-COPY --from=builder /go/src/shippingservice/shippingservice /shippingservice
+# Definition of this variable is used by 'skaffold debug' to identify a golang binary.
+# Default behavior - a failure prints a stack trace for the current goroutine.
+# See https://golang.org/pkg/runtime/
+ENV GOTRACEBACK=single
 
-ENTRYPOINT ["/shippingservice"]
-CMD []
+COPY --from=builder /etc/ssl/certs /etc/ssl/certs
+COPY --from=builder /bin/grpc_health_probe /bin/
+COPY --from=builder /go/src/hipstershop/shippingservice /hipstershop/shippingservice
+
+ENTRYPOINT ["/hipstershop/shippingservice"]

@@ -31,7 +31,7 @@ spec:
       labels:
         app: emailservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
@@ -87,7 +87,7 @@ spec:
       labels:
         app: checkoutservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       containers:
         - name: server
           image: xpunch/go-micro-demo-checkoutservice:v1.0.0
@@ -156,7 +156,7 @@ spec:
       labels:
         app: recommendationservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
@@ -218,7 +218,7 @@ spec:
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       containers:
         - name: server
           image: xpunch/go-micro-demo-frontend:v1.0.0
@@ -258,7 +258,7 @@ spec:
             - name: AD_SERVICE_ADDR
               value: "adservice:9555"
             # # ENV_PLATFORM: One of: local, gcp, aws, azure, onprem, alibaba
-            # # When not set, defaults to "local" unless running in GKE, otherwies auto-sets to gcp
+            # # When not set, go-micros to "local" unless running in GKE, otherwies auto-sets to gcp
             # - name: ENV_PLATFORM
             #   value: "aws"
             - name: DISABLE_TRACING
@@ -316,7 +316,7 @@ spec:
       labels:
         app: paymentservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
@@ -372,7 +372,7 @@ spec:
       labels:
         app: productcatalogservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
@@ -430,7 +430,7 @@ spec:
       labels:
         app: cartservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
@@ -489,7 +489,7 @@ spec:
       annotations:
         sidecar.istio.io/rewriteAppHTTPProbers: "true"
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       restartPolicy: Always
       initContainers:
@@ -537,7 +537,7 @@ spec:
       labels:
         app: currencyservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
@@ -594,7 +594,7 @@ spec:
       labels:
         app: shippingservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       containers:
         - name: server
           image: xpunch/go-micro-demo-shippingservice:v1.0.0
@@ -705,7 +705,7 @@ spec:
       labels:
         app: adservice
     spec:
-      serviceAccountName: default
+      serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
