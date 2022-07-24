@@ -14,7 +14,7 @@ RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
 
 # Build Go binary
 COPY Makefile go.mod go.sum ./
-RUN go env -w GOPROXY=https://goproxy.io,direct
+RUN go env -w GOPROXY=https://goproxy.io,direct/
 RUN make init && go mod download
 COPY . .
 RUN make proto tidy
@@ -26,11 +26,12 @@ RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /go/src/hipstershop/adservice 
 # Deployment container
 FROM scratch
 
+WORKDIR /hipstershop
+
 # Definition of this variable is used by 'skaffold debug' to identify a golang binary.
 # Default behavior - a failure prints a stack trace for the current goroutine.
 # See https://golang.org/pkg/runtime/
 ENV GOTRACEBACK=single
-
 COPY --from=builder /etc/ssl/certs /etc/ssl/certs
 COPY --from=builder /bin/grpc_health_probe /bin/
 COPY --from=builder /go/src/hipstershop/adservice /hipstershop/

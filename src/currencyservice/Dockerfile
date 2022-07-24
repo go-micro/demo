@@ -9,12 +9,12 @@ RUN apk --update --no-cache add ca-certificates make protoc
 
 # Download grpc_health_probe
 RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
-wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
-chmod +x /bin/grpc_health_probe
+    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
+    chmod +x /bin/grpc_health_probe
 
 # Build Go binary
 COPY Makefile go.mod go.sum ./
-RUN go env -w GOPROXY=https://goproxy.io,direct
+RUN go env -w GOPROXY=https://goproxy.io,direct/
 RUN make init && go mod download
 COPY . .
 RUN make proto tidy
@@ -26,12 +26,13 @@ RUN go build -gcflags="${SKAFFOLD_GO_GCFLAGS}" -o /go/src/hipstershop/currencyse
 # Deployment container
 FROM scratch
 
+WORKDIR /hipstershop
+
 # Definition of this variable is used by 'skaffold debug' to identify a golang binary.
 # Default behavior - a failure prints a stack trace for the current goroutine.
 # See https://golang.org/pkg/runtime/
 ENV GOTRACEBACK=single
 
-WORKDIR /hipstershop
 
 COPY ./data /hipstershop/data/
 COPY --from=builder /etc/ssl/certs /etc/ssl/certs
