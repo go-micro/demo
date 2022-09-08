@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:1.19.0-alpine AS builder
 
 # Set Go env
 ENV CGO_ENABLED=0 GOOS=linux
@@ -9,13 +9,13 @@ RUN apk --update --no-cache add ca-certificates make protoc
 
 # Download grpc_health_probe
 RUN GRPC_HEALTH_PROBE_VERSION=v0.4.11 && \
-wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
-chmod +x /bin/grpc_health_probe
+    wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
+    chmod +x /bin/grpc_health_probe
 
 # Build Go binary
 COPY Makefile go.mod go.sum ./
 RUN go env -w GOPROXY=https://goproxy.io,direct/
-RUN make init && go mod download 
+RUN make init && go mod download
 COPY . .
 RUN make proto tidy
 

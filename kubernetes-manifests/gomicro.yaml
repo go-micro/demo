@@ -58,6 +58,8 @@ spec:
               value: "kubernetes"
             - name: MICRO_CLIENT_RETRIES
               value: "0"
+            - name: SERVER_ADDRESS
+              value: ":80"
             - name: SERVER_AUTH_USERNAME
               value: "admin"
             - name: SERVER_AUTH_PASSWORD

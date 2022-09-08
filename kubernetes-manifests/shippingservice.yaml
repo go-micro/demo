@@ -34,16 +34,12 @@ spec:
           env:
             - name: PORT
               value: "50051"
-            - name: MICRO_REGISTRY_ADDRESS
+            - name: MICRO_REGISTRY
               value: "kubernetes"
-            # - name: DISABLE_STATS
-            #   value: "1"
-            # - name: DISABLE_TRACING
-            #   value: "1"
-            # - name: DISABLE_PROFILER
-            #   value: "1"
-            # - name: JAEGER_SERVICE_ADDR
-            #   value: "jaeger-collector:14268"
+            - name: TRACING_ENABLE
+              value: "true"
+            - name: TRACING_JAEGER_URL
+              value: "http://jaeger-collector.default.svc.cluster.local:14268/api/traces"
           readinessProbe:
             periodSeconds: 5
             exec:

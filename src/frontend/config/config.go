@@ -8,6 +8,7 @@ import (
 
 type Config struct {
 	Address               string
+	Tracing               TracingConfig
 	AdService             string
 	CartService           string
 	CheckoutService       string
@@ -17,8 +18,17 @@ type Config struct {
 	ShippingService       string
 }
 
+type TracingConfig struct {
+	Enable bool
+	Jaeger JaegerConfig
+}
+
+type JaegerConfig struct {
+	URL string
+}
+
 var cfg *Config = &Config{
-	Address:               ":80",
+	Address:               ":8090",
 	AdService:             "adservice",
 	CartService:           "cartservice",
 	CheckoutService:       "checkoutservice",
@@ -34,6 +44,10 @@ func Get() Config {
 
 func Address() string {
 	return cfg.Address
+}
+
+func Tracing() TracingConfig {
+	return cfg.Tracing
 }
 
 func Load() error {

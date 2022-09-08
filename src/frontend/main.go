@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
@@ -13,8 +14,9 @@ import (
 	"github.com/sirupsen/logrus"
 	"go-micro.dev/v4"
 	"go-micro.dev/v4/logger"
-	"go.opencensus.io/plugin/ochttp"
-	"go.opencensus.io/plugin/ochttp/propagation/b3"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/propagation"
 
 	"github.com/go-micro/demo/frontend/config"
 	pb "github.com/go-micro/demo/frontend/proto"
@@ -66,11 +68,27 @@ func main() {
 		micro.Server(mhttp.NewServer()),
 		micro.Client(mgrpc.NewClient()),
 	)
-	srv.Init(
+	opts := []micro.Option{
 		micro.Name(name),
-		micro.Address(config.Address()),
 		micro.Version(version),
-	)
+		micro.Address(config.Address()),
+	}
+	if cfg := config.Tracing(); cfg.Enable {
+		tp, err := newTracerProvider(name, srv.Server().Options().Id, cfg.Jaeger.URL)
+		if err != nil {
+			logger.Fatal(err)
+		}
+		defer func() {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+			defer cancel()
+			if err := tp.Shutdown(ctx); err != nil {
+				logger.Fatal(err)
+			}
+		}()
+		otel.SetTracerProvider(tp)
+		otel.SetTextMapPropagator(propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{}))
+	}
+	srv.Init(opts...)
 
 	log := logrus.New()
 	log.Level = logrus.DebugLevel
@@ -111,10 +129,9 @@ func main() {
 	var handler http.Handler = r
 	handler = &logHandler{log: log, next: handler} // add logging
 	handler = ensureSessionID(handler)             // add session ID
-	handler = &ochttp.Handler{                     // add opencensus instrumentation
-		Handler:     handler,
-		Propagation: &b3.HTTPFormat{},
-	}
+	// handler = tracing(handler)                     // add opentelemetry instrumentation
+	r.Use(otelmux.Middleware(name))
+	r.Use(tracingContextWrapper)
 	if err := micro.RegisterHandler(srv.Server(), handler); err != nil {
 		logger.Fatal(err)
 	}

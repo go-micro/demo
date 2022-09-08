@@ -9,10 +9,22 @@ import (
 )
 
 type Config struct {
-	Port  int
-	Redis struct {
-		Addr string
-	}
+	Port    int
+	Redis   RedisConfig
+	Tracing TracingConfig
+}
+
+type RedisConfig struct {
+	Addr string
+}
+
+type TracingConfig struct {
+	Enable bool
+	Jaeger JaegerConfig
+}
+
+type JaegerConfig struct {
+	URL string
 }
 
 var cfg *Config = &Config{
@@ -23,8 +35,12 @@ func Address() string {
 	return fmt.Sprintf(":%d", cfg.Port)
 }
 
-func RedisAddress() string {
-	return cfg.Redis.Addr
+func Redis() RedisConfig {
+	return cfg.Redis
+}
+
+func Tracing() TracingConfig {
+	return cfg.Tracing
 }
 
 func Load() error {

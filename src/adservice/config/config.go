@@ -9,7 +9,17 @@ import (
 )
 
 type Config struct {
-	Port int
+	Port    int
+	Tracing TracingConfig
+}
+
+type TracingConfig struct {
+	Enable bool
+	Jaeger JaegerConfig
+}
+
+type JaegerConfig struct {
+	URL string
 }
 
 var cfg *Config = &Config{
@@ -18,6 +28,10 @@ var cfg *Config = &Config{
 
 func Address() string {
 	return fmt.Sprintf(":%d", cfg.Port)
+}
+
+func Tracing() TracingConfig {
+	return cfg.Tracing
 }
 
 func Load() error {
