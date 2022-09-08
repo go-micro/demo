@@ -40,7 +40,7 @@ type platformDetails struct {
 }
 
 var (
-	isCymbalBrand = "true" == strings.ToLower(os.Getenv("CYMBAL_BRANDING"))
+	isCymbalBrand = strings.ToLower(os.Getenv("CYMBAL_BRANDING")) == "true"
 	templates     = template.Must(template.New("").
 			Funcs(template.FuncMap{
 			"renderMoney":        renderMoney,
@@ -87,7 +87,7 @@ func (fe *frontendServer) homeHandler(w http.ResponseWriter, r *http.Request) {
 	// Set ENV_PLATFORM (default to local if not set; use env var if set; otherwise detect GCP, which overrides env)_
 	var env = os.Getenv("ENV_PLATFORM")
 	// Only override from env variable if set + valid env
-	if env == "" || stringinSlice(validEnvs, env) == false {
+	if env == "" || !stringinSlice(validEnvs, env) {
 		fmt.Println("env platform is either empty or invalid")
 		env = "local"
 	}
@@ -153,6 +153,7 @@ func (fe *frontendServer) productHandler(w http.ResponseWriter, r *http.Request)
 	log.WithField("id", id).WithField("currency", currentCurrency(r)).
 		Debug("serving product page")
 
+	fmt.Printf("product: %p\n", r.Context())
 	p, err := fe.getProduct(r.Context(), id)
 	if err != nil {
 		renderHTTPError(log, r, w, errors.Wrap(err, "could not retrieve product"), http.StatusInternalServerError)

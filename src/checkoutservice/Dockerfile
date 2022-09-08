@@ -1,4 +1,4 @@
-FROM golang:alpine AS builder
+FROM golang:1.19.0-alpine AS builder
 
 # Set Go env
 ENV CGO_ENABLED=0 GOOS=linux

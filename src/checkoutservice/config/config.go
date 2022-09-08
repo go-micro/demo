@@ -10,12 +10,22 @@ import (
 
 type Config struct {
 	Port                  int
+	Tracing               TracingConfig
 	CartService           string
 	CurrencyService       string
 	EmailService          string
 	PaymentService        string
 	ProductCatalogService string
 	ShippingService       string
+}
+
+type TracingConfig struct {
+	Enable bool
+	Jaeger JaegerConfig
+}
+
+type JaegerConfig struct {
+	URL string
 }
 
 var cfg *Config = &Config{
@@ -34,6 +44,10 @@ func Get() Config {
 
 func Address() string {
 	return fmt.Sprintf(":%d", cfg.Port)
+}
+
+func Tracing() TracingConfig {
+	return cfg.Tracing
 }
 
 func Load() error {

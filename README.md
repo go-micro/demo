@@ -12,7 +12,7 @@ web-based e-commerce app where users can browse items,
 add them to the cart, and purchase them.
 
 **Google uses this application to demonstrate use of technologies like
-Kubernetes/GKE, Istio, Stackdriver, gRPC and OpenCensus**. This application
+Kubernetes/GKE, Istio, Stackdriver, gRPC and OpenTelemetry**. This application
 works on any Kubernetes cluster, as well as Google
 Kubernetes Engine. It’s **easy to deploy with little to no configuration**.
 
@@ -34,6 +34,7 @@ If you’re using this demo, please **★Star** this repository to show your int
 - **Memorystore**: [See these instructions](/docs/memorystore.md) to replace the in-cluster `redis` database with hosted Google Cloud Memorystore (redis).
 - **Cymbal Shops Branding**: [See these instructions](/docs/cymbal-shops.md)
 - **NetworkPolicies**: [See these instructions](/docs/network-policies/README.md)
+- **Jaeger**: [See these instructions](/docs/jaeger.md)
 
 
 ## Architecture
@@ -66,13 +67,17 @@ microservices](./docs/img/architecture-diagram.png)](./docs/img/architecture-dia
 - **[gRPC](https://grpc.io):** Microservices use a high volume of gRPC calls to
   communicate to each other.
 - **[Istio](https://istio.io):** Application works on Istio service mesh.
-- **[OpenCensus](https://opencensus.io/) Tracing:** Most services are
-  instrumented using OpenCensus trace interceptors for gRPC/HTTP.
+- **[OpenTelemetry](https://opentelemetry.io/) Tracing:** Most services are
+  instrumented using OpenTelemetry trace interceptors for gRPC/HTTP.
 - **[Skaffold](https://skaffold.dev):** Application
   is deployed to Kubernetes with a single command using Skaffold.
 - **Synthetic Load Generation:** The application demo comes with a background
   job that creates realistic usage patterns on the website using
   [Locust](https://locust.io/) load generator.
+
+## OpenTelemetry
+
+[![Jaeger Dependencies](./docs/img/jaeger-dependencies.png)](./docs/img/jaeger-dependencies.png)
 
 ## Local Development
 

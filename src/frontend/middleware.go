@@ -103,3 +103,22 @@ func ensureSessionID(next http.Handler) http.HandlerFunc {
 		next.ServeHTTP(w, r)
 	}
 }
+
+// func tracing(next http.Handler) http.Handler {
+// 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+// 		if r.Method == "OPTIONS" || r.Method == "PRI" {
+// 			next.ServeHTTP(w, r)
+// 			return
+// 		}
+// 		url := r.URL.EscapedPath()
+// 		if url == "_healthz" {
+// 			next.ServeHTTP(w, r)
+// 			return
+// 		}
+// 		ctx, span := opentelemetry.StartSpanFromContext(context.Background(), otel.GetTracerProvider(), url)
+// 		defer span.End()
+
+// 		r = r.WithContext(ctx)
+// 		next.ServeHTTP(w, r)
+// 	})
+// }
