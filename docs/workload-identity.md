@@ -31,12 +31,12 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --role roles/clouddebugger.agent
 ```
 
-3. **Generate OnlineBoutique manifests** using your KSA as the Pod service account. In `kubernetes-manifests/`, replace `serviceAccountName: default` with the name of your KSA. (**Note** - sample below is Bash.)
+3. **Generate OnlineBoutique manifests** using your KSA as the Pod service account. In `infra/k8s/`, replace `serviceAccountName: default` with the name of your KSA. (**Note** - sample below is Bash.)
 
 ```bash
 
 KSA_NAME=<your-ksa>
-sed "s/serviceAccountName: default/serviceAccountName: ${KSA_NAME}/g" release/kubernetes-manifests.yaml > release/wi-kubernetes-manifests.yaml
+sed "s/serviceAccountName: default/serviceAccountName: ${KSA_NAME}/g" release/infra/k8s.yaml > release/wi-infra/k8s.yaml
 done
 ```
 
@@ -44,5 +44,5 @@ done
 
 ```bash
 NAMESPACE=<your-ksa-namespace>
-kubectl apply -n ${NAMESPACE} -f release/wi-kubernetes-manifests.yaml
+kubectl apply -n ${NAMESPACE} -f release/wi-infra/k8s.yaml
 ```
