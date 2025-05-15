@@ -1,7 +1,7 @@
 # Go Micro Demo [![License](https://img.shields.io/:license-apache-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![GoDoc](https://godoc.org/github.com/go-micro/demo?status.svg)](https://godoc.org/github.com/go-micro/demo) [![Unit Tests](https://github.com/go-micro/demo/actions/workflows/ci.yml/badge.svg)](https://github.com/go-micro/demo/actions/workflows/ci.yml) [![Docker](https://github.com/go-micro/demo/actions/workflows/docker.yml/badge.svg)](https://github.com/go-micro/demo/actions/workflows/docker.yml)
 
 <p align="center">
-<img src="src/frontend/static/icons/Hipster_HeroLogoCyan.svg" width="300" alt="Online Boutique" />
+<img src="service/frontend/static/icons/Hipster_HeroLogoCyan.svg" width="300" alt="Online Boutique" />
 </p>
 
 **This application was forked from [microservices-demo](https://github.com/GoogleCloudPlatform/microservices-demo), used to demonstrate how to build micro servics with [go-micro](https://github.com/go-micro/go-micro).**
@@ -47,17 +47,17 @@ microservices](./docs/img/architecture-diagram.png)](./docs/img/architecture-dia
 
 | Service                                              | Language      | Description                                                                                                                       |
 | ---------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| [frontend](./src/frontend)                           | Go            | Exposes an HTTP server to serve the website. Does not require signup/login and generates session IDs for all users automatically. |
-| [cartservice](./src/cartservice)                     | Go            | Stores the items in the user's shopping cart in Redis and retrieves it.                                                           |
-| [productcatalogservice](./src/productcatalogservice) | Go            | Provides the list of products from a JSON file and ability to search products and get individual products.                        |
-| [currencyservice](./src/currencyservice)             | Go            | Converts one money amount to another currency. Uses real values fetched from European Central Bank. It's the highest QPS service. |
-| [paymentservice](./src/paymentservice)               | Go            | Charges the given credit card info (mock) with the given amount and returns a transaction ID.                                     |
-| [shippingservice](./src/shippingservice)             | Go            | Gives shipping cost estimates based on the shopping cart. Ships items to the given address (mock)                                 |
-| [emailservice](./src/emailservice)                   | Go            | Sends users an order confirmation email (mock).                                                                                   |
-| [checkoutservice](./src/checkoutservice)             | Go            | Retrieves user cart, prepares order and orchestrates the payment, shipping and the email notification.                            |
-| [recommendationservice](./src/recommendationservice) | Go            | Recommends other products based on what's given in the cart.                                                                      |
-| [adservice](./src/adservice)                         | Go            | Provides text ads based on given context words.                                                                                   |
-| [loadgenerator](./src/loadgenerator)                 | Python+Locust | Continuously sends requests imitating realistic user shopping flows to the frontend.                                              |
+| [frontend](./service/frontend)                           | Go            | Exposes an HTTP server to serve the website. Does not require signup/login and generates session IDs for all users automatically. |
+| [cartservice](./service/cartservice)                     | Go            | Stores the items in the user's shopping cart in Redis and retrieves it.                                                           |
+| [productcatalogservice](./service/productcatalogservice) | Go            | Provides the list of products from a JSON file and ability to search products and get individual products.                        |
+| [currencyservice](./service/currencyservice)             | Go            | Converts one money amount to another currency. Uses real values fetched from European Central Bank. It's the highest QPS service. |
+| [paymentservice](./service/paymentservice)               | Go            | Charges the given credit card info (mock) with the given amount and returns a transaction ID.                                     |
+| [shippingservice](./service/shippingservice)             | Go            | Gives shipping cost estimates based on the shopping cart. Ships items to the given address (mock)                                 |
+| [emailservice](./service/emailservice)                   | Go            | Sends users an order confirmation email (mock).                                                                                   |
+| [checkoutservice](./service/checkoutservice)             | Go            | Retrieves user cart, prepares order and orchestrates the payment, shipping and the email notification.                            |
+| [recommendationservice](./service/recommendationservice) | Go            | Recommends other products based on what's given in the cart.                                                                      |
+| [adservice](./service/adservice)                         | Go            | Provides text ads based on given context words.                                                                                   |
+| [loadgenerator](./service/loadgenerator)                 | Python+Locust | Continuously sends requests imitating realistic user shopping flows to the frontend.                                              |
 
 ## Features
 

@@ -21,14 +21,14 @@ jobs:
 
       - name: Test AdService
         run: |
-          cd src/adservice
+          cd service/adservice
           go vet ./...
           go test -v ./...
 
 
       - name: Test CartService
         run: |
-          cd src/cartservice
+          cd service/cartservice
           go vet ./...
           go test -v ./...
 

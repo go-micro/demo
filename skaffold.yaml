@@ -9,27 +9,27 @@ build:
     # here:
     # https://skaffold.dev/docs/concepts/#image-repository-handling
     - image: emailservice
-      context: src/emailservice
+      context: service/emailservice
     - image: productcatalogservice
-      context: src/productcatalogservice
+      context: service/productcatalogservice
     - image: recommendationservice
-      context: src/recommendationservice
+      context: service/recommendationservice
     - image: shippingservice
-      context: src/shippingservice
+      context: service/shippingservice
     - image: checkoutservice
-      context: src/checkoutservice
+      context: service/checkoutservice
     - image: paymentservice
-      context: src/paymentservice
+      context: service/paymentservice
     - image: currencyservice
-      context: src/currencyservice
+      context: service/currencyservice
     - image: cartservice
-      context: src/cartservice
+      context: service/cartservice
       docker:
         dockerfile: Dockerfile
     - image: frontend
-      context: src/frontend
+      context: service/frontend
     - image: adservice
-      context: src/adservice
+      context: service/adservice
   tagPolicy:
     gitCommit: {}
   local:
@@ -38,17 +38,17 @@ build:
 deploy:
   kubectl:
     manifests:
-      - ./kubernetes-manifests/adservice.yaml
-      - ./kubernetes-manifests/cartservice.yaml
-      - ./kubernetes-manifests/checkoutservice.yaml
-      - ./kubernetes-manifests/currencyservice.yaml
-      - ./kubernetes-manifests/emailservice.yaml
-      - ./kubernetes-manifests/frontend.yaml
-      - ./kubernetes-manifests/paymentservice.yaml
-      - ./kubernetes-manifests/productcatalogservice.yaml
-      - ./kubernetes-manifests/recommendationservice.yaml
-      - ./kubernetes-manifests/shippingservice.yaml
-      - ./kubernetes-manifests/gomicro.yaml
+      - ./infra/k8s/adservice.yaml
+      - ./infra/k8s/cartservice.yaml
+      - ./infra/k8s/checkoutservice.yaml
+      - ./infra/k8s/currencyservice.yaml
+      - ./infra/k8s/emailservice.yaml
+      - ./infra/k8s/frontend.yaml
+      - ./infra/k8s/paymentservice.yaml
+      - ./infra/k8s/productcatalogservice.yaml
+      - ./infra/k8s/recommendationservice.yaml
+      - ./infra/k8s/shippingservice.yaml
+      - ./infra/k8s/gomicro.yaml
 # profiles:
 #   # "debug" profile replaces the default Dockerfile in cartservice with Dockerfile.debug,
 #   # which enables debugging via skaffold.
@@ -72,8 +72,8 @@ requires:
 build:
   artifacts:
     - image: loadgenerator
-      context: src/loadgenerator
+      context: service/loadgenerator
 deploy:
   kubectl:
     manifests:
-      - ./kubernetes-manifests/loadgenerator.yaml
+      - ./infra/k8s/loadgenerator.yaml
