@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: currencyservice
+  name: currency
 spec:
   selector:
     matchLabels:
-      app: currencyservice
+      app: currency
   template:
     metadata:
       labels:
-        app: currencyservice
+        app: currency
     spec:
       serviceAccountName: go-micro 
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: currencyservice
+          image: currency
           ports:
             - name: grpc
               containerPort: 7000
@@ -45,11 +45,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: currencyservice
+  name: currency
 spec:
   type: ClusterIP
   selector:
-    app: currencyservice
+    app: currency
   ports:
     - name: grpc
       port: 7000

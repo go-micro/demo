@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: productcatalogservice
+  name: productcatalog
 spec:
   selector:
     matchLabels:
-      app: productcatalogservice
+      app: productcatalog
   template:
     metadata:
       labels:
-        app: productcatalogservice
+        app: productcatalog
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: productcatalogservice
+          image: productcatalog
           ports:
             - containerPort: 3550
           env:
@@ -44,11 +44,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: productcatalogservice
+  name: productcatalog
 spec:
   type: ClusterIP
   selector:
-    app: productcatalogservice
+    app: productcatalog
   ports:
     - name: grpc
       port: 3550

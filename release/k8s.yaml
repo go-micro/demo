@@ -21,21 +21,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: emailservice
+  name: email
 spec:
   selector:
     matchLabels:
-      app: emailservice
+      app: email
   template:
     metadata:
       labels:
-        app: emailservice
+        app: email
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: xpunch/go-micro-demo-emailservice:v1.0.0
+          image: xpunch/go-micro-demo-email:v1.0.0
           ports:
             - containerPort: 8080
           env:
@@ -64,11 +64,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: emailservice
+  name: email
 spec:
   type: ClusterIP
   selector:
-    app: emailservice
+    app: email
   ports:
     - name: grpc
       port: 5000
@@ -77,20 +77,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: checkoutservice
+  name: checkout
 spec:
   selector:
     matchLabels:
-      app: checkoutservice
+      app: checkout
   template:
     metadata:
       labels:
-        app: checkoutservice
+        app: checkout
     spec:
       serviceAccountName: go-micro
       containers:
         - name: server
-          image: xpunch/go-micro-demo-checkoutservice:v1.0.0
+          image: xpunch/go-micro-demo-checkout:v1.0.0
           ports:
             - containerPort: 5050
           readinessProbe:
@@ -103,17 +103,17 @@ spec:
             - name: PORT
               value: "5050"
             - name: PRODUCT_CATALOG_SERVICE_ADDR
-              value: "productcatalogservice:3550"
+              value: "productcatalog:3550"
             - name: SHIPPING_SERVICE_ADDR
-              value: "shippingservice:50051"
+              value: "shipping:50051"
             - name: PAYMENT_SERVICE_ADDR
-              value: "paymentservice:50051"
+              value: "payment:50051"
             - name: EMAIL_SERVICE_ADDR
-              value: "emailservice:5000"
+              value: "email:5000"
             - name: CURRENCY_SERVICE_ADDR
-              value: "currencyservice:7000"
+              value: "currency:7000"
             - name: CART_SERVICE_ADDR
-              value: "cartservice:7070"
+              value: "cart:7070"
             - name: DISABLE_STATS
               value: "1"
             - name: DISABLE_TRACING
@@ -133,11 +133,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: checkoutservice
+  name: checkout
 spec:
   type: ClusterIP
   selector:
-    app: checkoutservice
+    app: checkout
   ports:
     - name: grpc
       port: 5050
@@ -146,21 +146,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: recommendationservice
+  name: recommendation
 spec:
   selector:
     matchLabels:
-      app: recommendationservice
+      app: recommendation
   template:
     metadata:
       labels:
-        app: recommendationservice
+        app: recommendation
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: xpunch/go-micro-demo-recommendationservice:v1.0.0
+          image: xpunch/go-micro-demo-recommendation:v1.0.0
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -175,7 +175,7 @@ spec:
             - name: PORT
               value: "8080"
             - name: PRODUCT_CATALOG_SERVICE_ADDR
-              value: "productcatalogservice:3550"
+              value: "productcatalog:3550"
             - name: DISABLE_TRACING
               value: "1"
             - name: DISABLE_PROFILER
@@ -193,11 +193,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommendationservice
+  name: recommendation
 spec:
   type: ClusterIP
   selector:
-    app: recommendationservice
+    app: recommendation
   ports:
     - name: grpc
       port: 8080
@@ -244,19 +244,19 @@ spec:
             - name: PORT
               value: "8080"
             - name: PRODUCT_CATALOG_SERVICE_ADDR
-              value: "productcatalogservice:3550"
+              value: "productcatalog:3550"
             - name: CURRENCY_SERVICE_ADDR
-              value: "currencyservice:7000"
+              value: "currency:7000"
             - name: CART_SERVICE_ADDR
-              value: "cartservice:7070"
+              value: "cart:7070"
             - name: RECOMMENDATION_SERVICE_ADDR
-              value: "recommendationservice:8080"
+              value: "recommendation:8080"
             - name: SHIPPING_SERVICE_ADDR
-              value: "shippingservice:50051"
+              value: "shipping:50051"
             - name: CHECKOUT_SERVICE_ADDR
-              value: "checkoutservice:5050"
+              value: "checkout:5050"
             - name: AD_SERVICE_ADDR
-              value: "adservice:9555"
+              value: "ad:9555"
             # # ENV_PLATFORM: One of: local, gcp, aws, azure, onprem, alibaba
             # # When not set, go-micros to "local" unless running in GKE, otherwies auto-sets to gcp
             # - name: ENV_PLATFORM
@@ -306,21 +306,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: paymentservice
+  name: payment
 spec:
   selector:
     matchLabels:
-      app: paymentservice
+      app: payment
   template:
     metadata:
       labels:
-        app: paymentservice
+        app: payment
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: xpunch/go-micro-demo-paymentservice:v1.0.0
+          image: xpunch/go-micro-demo-payment:v1.0.0
           ports:
             - containerPort: 50051
           env:
@@ -349,11 +349,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentservice
+  name: payment
 spec:
   type: ClusterIP
   selector:
-    app: paymentservice
+    app: payment
   ports:
     - name: grpc
       port: 50051
@@ -362,21 +362,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: productcatalogservice
+  name: productcatalog
 spec:
   selector:
     matchLabels:
-      app: productcatalogservice
+      app: productcatalog
   template:
     metadata:
       labels:
-        app: productcatalogservice
+        app: productcatalog
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: xpunch/go-micro-demo-productcatalogservice:v1.0.0
+          image: xpunch/go-micro-demo-productcatalog:v1.0.0
           ports:
             - containerPort: 3550
           env:
@@ -407,11 +407,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: productcatalogservice
+  name: productcatalog
 spec:
   type: ClusterIP
   selector:
-    app: productcatalogservice
+    app: productcatalog
   ports:
     - name: grpc
       port: 3550
@@ -420,21 +420,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cartservice
+  name: cart
 spec:
   selector:
     matchLabels:
-      app: cartservice
+      app: cart
   template:
     metadata:
       labels:
-        app: cartservice
+        app: cart
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: xpunch/go-micro-demo-cartservice:v1.0.0
+          image: xpunch/go-micro-demo-cart:v1.0.0
           imagePullPolicy: Never
           ports:
             - containerPort: 7070
@@ -463,11 +463,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cartservice
+  name: cart
 spec:
   type: ClusterIP
   selector:
-    app: cartservice
+    app: cart
   ports:
     - name: grpc
       port: 7070
@@ -527,21 +527,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: currencyservice
+  name: currency
 spec:
   selector:
     matchLabels:
-      app: currencyservice
+      app: currency
   template:
     metadata:
       labels:
-        app: currencyservice
+        app: currency
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: xpunch/go-micro-demo-currencyservice:v1.0.0
+          image: xpunch/go-micro-demo-currency:v1.0.0
           ports:
             - name: grpc
               containerPort: 7000
@@ -571,11 +571,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: currencyservice
+  name: currency
 spec:
   type: ClusterIP
   selector:
-    app: currencyservice
+    app: currency
   ports:
     - name: grpc
       port: 7000
@@ -584,20 +584,20 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shippingservice
+  name: shipping
 spec:
   selector:
     matchLabels:
-      app: shippingservice
+      app: shipping
   template:
     metadata:
       labels:
-        app: shippingservice
+        app: shipping
     spec:
       serviceAccountName: go-micro
       containers:
         - name: server
-          image: xpunch/go-micro-demo-shippingservice:v1.0.0
+          image: xpunch/go-micro-demo-shipping:v1.0.0
           ports:
             - containerPort: 50051
           env:
@@ -629,11 +629,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shippingservice
+  name: shipping
 spec:
   type: ClusterIP
   selector:
-    app: shippingservice
+    app: shipping
   ports:
     - name: grpc
       port: 50051
@@ -695,21 +695,21 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adservice
+  name: ad
 spec:
   selector:
     matchLabels:
-      app: adservice
+      app: ad
   template:
     metadata:
       labels:
-        app: adservice
+        app: ad
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: xpunch/go-micro-demo-adservice:v1.0.0
+          image: xpunch/go-micro-demo-ad:v1.0.0
           ports:
             - containerPort: 9555
           env:
@@ -744,11 +744,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice
+  name: ad
 spec:
   type: ClusterIP
   selector:
-    app: adservice
+    app: ad
   ports:
     - name: grpc
       port: 9555

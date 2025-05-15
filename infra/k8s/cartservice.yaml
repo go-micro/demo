@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cartservice
+  name: cart
 spec:
   selector:
     matchLabels:
-      app: cartservice
+      app: cart
   template:
     metadata:
       labels:
-        app: cartservice
+        app: cart
     spec:
       serviceAccountName: go-micro 
       terminationGracePeriodSeconds: 5
@@ -27,7 +27,7 @@ spec:
                 - all
             privileged: false
             readOnlyRootFilesystem: true
-          image: cartservice
+          image: cart
           ports:
             - containerPort: 7070
           env:
@@ -63,11 +63,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cartservice
+  name: cart
 spec:
   type: ClusterIP
   selector:
-    app: cartservice
+    app: cart
   ports:
     - name: grpc
       port: 7070

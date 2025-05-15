@@ -48,15 +48,15 @@ microservices](./docs/img/architecture-diagram.png)](./docs/img/architecture-dia
 | Service                                              | Language      | Description                                                                                                                       |
 | ---------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | [frontend](./service/frontend)                           | Go            | Exposes an HTTP server to serve the website. Does not require signup/login and generates session IDs for all users automatically. |
-| [cartservice](./service/cartservice)                     | Go            | Stores the items in the user's shopping cart in Redis and retrieves it.                                                           |
-| [productcatalogservice](./service/productcatalogservice) | Go            | Provides the list of products from a JSON file and ability to search products and get individual products.                        |
-| [currencyservice](./service/currencyservice)             | Go            | Converts one money amount to another currency. Uses real values fetched from European Central Bank. It's the highest QPS service. |
-| [paymentservice](./service/paymentservice)               | Go            | Charges the given credit card info (mock) with the given amount and returns a transaction ID.                                     |
-| [shippingservice](./service/shippingservice)             | Go            | Gives shipping cost estimates based on the shopping cart. Ships items to the given address (mock)                                 |
-| [emailservice](./service/emailservice)                   | Go            | Sends users an order confirmation email (mock).                                                                                   |
-| [checkoutservice](./service/checkoutservice)             | Go            | Retrieves user cart, prepares order and orchestrates the payment, shipping and the email notification.                            |
-| [recommendationservice](./service/recommendationservice) | Go            | Recommends other products based on what's given in the cart.                                                                      |
-| [adservice](./service/adservice)                         | Go            | Provides text ads based on given context words.                                                                                   |
+| [cart](./service/cart)                     | Go            | Stores the items in the user's shopping cart in Redis and retrieves it.                                                           |
+| [productcatalog](./service/productcatalog) | Go            | Provides the list of products from a JSON file and ability to search products and get individual products.                        |
+| [currency](./service/currency)             | Go            | Converts one money amount to another currency. Uses real values fetched from European Central Bank. It's the highest QPS service. |
+| [payment](./service/payment)               | Go            | Charges the given credit card info (mock) with the given amount and returns a transaction ID.                                     |
+| [shipping](./service/shipping)             | Go            | Gives shipping cost estimates based on the shopping cart. Ships items to the given address (mock)                                 |
+| [email](./service/email)                   | Go            | Sends users an order confirmation email (mock).                                                                                   |
+| [checkout](./service/checkout)             | Go            | Retrieves user cart, prepares order and orchestrates the payment, shipping and the email notification.                            |
+| [recommendation](./service/recommendation) | Go            | Recommends other products based on what's given in the cart.                                                                      |
+| [ad](./service/ad)                         | Go            | Provides text ads based on given context words.                                                                                   |
 | [loadgenerator](./service/loadgenerator)                 | Python+Locust | Continuously sends requests imitating realistic user shopping flows to the frontend.                                              |
 
 ## Features

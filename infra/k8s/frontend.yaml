@@ -41,19 +41,19 @@ spec:
             - name: MICRO_REGISTRY
               value: "kubernetes"
             - name: PRODUCTCATALOGSERVICE
-              value: "productcatalogservice"
+              value: "productcatalog"
             - name: CURRENCYSERVICE
-              value: "currencyservice"
+              value: "currency"
             - name: CARTSERVICE
-              value: "cartservice"
+              value: "cart"
             - name: RECOMMENDATIONSERVICE
-              value: "recommendationservice"
+              value: "recommendation"
             - name: SHIPPINGSERVICE
-              value: "shippingservice"
+              value: "shipping"
             - name: CHECKOUTSERVICE
-              value: "checkoutservice"
+              value: "checkout"
             - name: ADSERVICE
-              value: "adservice"
+              value: "ad"
             # # ENV_PLATFORM: One of: local, gcp, aws, azure, onprem, alibaba
             # # When not set, defaults to "local" unless running in GKE, otherwies auto-sets to gcp
             # - name: ENV_PLATFORM

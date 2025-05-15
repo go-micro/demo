@@ -1,14 +1,14 @@
 go 1.19
 
 use (
-	./service/adservice
-	./service/cartservice
-	./service/checkoutservice
-	./service/currencyservice
-	./service/emailservice
+	./service/ad
+	./service/cart
+	./service/checkout
+	./service/currency
+	./service/email
 	./service/frontend
-	./service/paymentservice
-	./service/productcatalogservice
-	./service/recommendationservice
-	./service/shippingservice
+	./service/payment
+	./service/productcatalog
+	./service/recommendation
+	./service/shipping
 )

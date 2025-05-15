@@ -6,10 +6,10 @@ on:
     tags: ["*"]
 
 env:
-  IMAGE_NAME: xpunch/go-micro-demo-adservice
+  IMAGE_NAME: xpunch/go-micro-demo-ad
 
 jobs:
-  adservice:
+  ad:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -25,7 +25,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: xpunch/go-micro-demo-adservice 
+          images: xpunch/go-micro-demo-ad 
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
@@ -41,7 +41,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v3
         with:
-          context: "{{defaultContext}}:service/adservice"
+          context: "{{defaultContext}}:service/ad"
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

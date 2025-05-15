@@ -15,20 +15,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shippingservice
+  name: shipping
 spec:
   selector:
     matchLabels:
-      app: shippingservice
+      app: shipping
   template:
     metadata:
       labels:
-        app: shippingservice
+        app: shipping
     spec:
       serviceAccountName: go-micro
       containers:
         - name: server
-          image: shippingservice
+          image: shipping
           ports:
             - containerPort: 50051
           env:
@@ -58,11 +58,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: shippingservice
+  name: shipping
 spec:
   type: ClusterIP
   selector:
-    app: shippingservice
+    app: shipping
   ports:
     - name: grpc
       port: 50051

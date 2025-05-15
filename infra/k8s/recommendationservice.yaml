@@ -15,21 +15,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: recommendationservice
+  name: recommendation
 spec:
   selector:
     matchLabels:
-      app: recommendationservice
+      app: recommendation
   template:
     metadata:
       labels:
-        app: recommendationservice
+        app: recommendation
     spec:
       serviceAccountName: go-micro
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: recommendationservice
+          image: recommendation
           ports:
             - containerPort: 8080
           readinessProbe:
@@ -46,7 +46,7 @@ spec:
             - name: MICRO_REGISTRY
               value: "kubernetes"
             - name: PRODUCTCATALOGSERVICE
-              value: "productcatalogservice"
+              value: "productcatalog"
             - name: TRACING_ENABLE
               value: "true"
             - name: TRACING_JAEGER_URL
@@ -62,11 +62,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: recommendationservice
+  name: recommendation
 spec:
   type: ClusterIP
   selector:
-    app: recommendationservice
+    app: recommendation
   ports:
     - name: grpc
       port: 8080

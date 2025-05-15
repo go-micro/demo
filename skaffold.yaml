@@ -8,28 +8,28 @@ build:
     # must provide a "default repo" using one of the methods described
     # here:
     # https://skaffold.dev/docs/concepts/#image-repository-handling
-    - image: emailservice
-      context: service/emailservice
-    - image: productcatalogservice
-      context: service/productcatalogservice
-    - image: recommendationservice
-      context: service/recommendationservice
-    - image: shippingservice
-      context: service/shippingservice
-    - image: checkoutservice
-      context: service/checkoutservice
-    - image: paymentservice
-      context: service/paymentservice
-    - image: currencyservice
-      context: service/currencyservice
-    - image: cartservice
-      context: service/cartservice
+    - image: email
+      context: service/email
+    - image: productcatalog
+      context: service/productcatalog
+    - image: recommendation
+      context: service/recommendation
+    - image: shipping
+      context: service/shipping
+    - image: checkout
+      context: service/checkout
+    - image: payment
+      context: service/payment
+    - image: currency
+      context: service/currency
+    - image: cart
+      context: service/cart
       docker:
         dockerfile: Dockerfile
     - image: frontend
       context: service/frontend
-    - image: adservice
-      context: service/adservice
+    - image: ad
+      context: service/ad
   tagPolicy:
     gitCommit: {}
   local:
@@ -38,19 +38,19 @@ build:
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s/adservice.yaml
-      - ./infra/k8s/cartservice.yaml
-      - ./infra/k8s/checkoutservice.yaml
-      - ./infra/k8s/currencyservice.yaml
-      - ./infra/k8s/emailservice.yaml
+      - ./infra/k8s/ad.yaml
+      - ./infra/k8s/cart.yaml
+      - ./infra/k8s/checkout.yaml
+      - ./infra/k8s/currency.yaml
+      - ./infra/k8s/email.yaml
       - ./infra/k8s/frontend.yaml
-      - ./infra/k8s/paymentservice.yaml
-      - ./infra/k8s/productcatalogservice.yaml
-      - ./infra/k8s/recommendationservice.yaml
-      - ./infra/k8s/shippingservice.yaml
+      - ./infra/k8s/payment.yaml
+      - ./infra/k8s/productcatalog.yaml
+      - ./infra/k8s/recommendation.yaml
+      - ./infra/k8s/shipping.yaml
       - ./infra/k8s/gomicro.yaml
 # profiles:
-#   # "debug" profile replaces the default Dockerfile in cartservice with Dockerfile.debug,
+#   # "debug" profile replaces the default Dockerfile in cart with Dockerfile.debug,
 #   # which enables debugging via skaffold.
 #   #
 #   # This profile is used by default when running skaffold debug.

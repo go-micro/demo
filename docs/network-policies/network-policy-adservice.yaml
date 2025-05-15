@@ -15,11 +15,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: adservice
+  name: ad
 spec:
   podSelector:
     matchLabels:
-      app: adservice
+      app: ad
   policyTypes:
   - Ingress
   - Egress

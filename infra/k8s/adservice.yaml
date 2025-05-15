@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adservice
+  name: ad
 spec:
   selector:
     matchLabels:
-      app: adservice
+      app: ad
   template:
     metadata:
       labels:
-        app: adservice
+        app: ad
     spec:
       serviceAccountName: go-micro 
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: adservice
+          image: ad
           ports:
             - containerPort: 9555
           env:
@@ -48,11 +48,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: adservice
+  name: ad
 spec:
   type: ClusterIP
   selector:
-    app: adservice
+    app: ad
   ports:
     - name: grpc
       port: 9555

@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: emailservice
+  name: email
 spec:
   selector:
     matchLabels:
-      app: emailservice
+      app: email
   template:
     metadata:
       labels:
-        app: emailservice
+        app: email
     spec:
       serviceAccountName: go-micro 
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: emailservice
+          image: email
           ports:
             - containerPort: 8080
           env:
@@ -46,11 +46,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: emailservice
+  name: email
 spec:
   type: ClusterIP
   selector:
-    app: emailservice
+    app: email
   ports:
     - name: grpc
       port: 5000

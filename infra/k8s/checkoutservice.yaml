@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: checkoutservice
+  name: checkout
 spec:
   selector:
     matchLabels:
-      app: checkoutservice
+      app: checkout
   template:
     metadata:
       labels:
-        app: checkoutservice
+        app: checkout
     spec:
       serviceAccountName: go-micro
       containers:
         - name: server
-          image: checkoutservice
+          image: checkout
           ports:
             - containerPort: 5050
           readinessProbe:
@@ -29,17 +29,17 @@ spec:
             - name: MICRO_REGISTRY
               value: "kubernetes"
             - name: PRODUCTCATALOGSERVICE
-              value: "productcatalogservice"
+              value: "productcatalog"
             - name: SHIPPINGSERVICE
-              value: "shippingservice"
+              value: "shipping"
             - name: PAYMENTSERVICE
-              value: "paymentservice"
+              value: "payment"
             - name: EMAILSERVICE
-              value: "emailservice"
+              value: "email"
             - name: CURRENCYSERVICE
-              value: "currencyservice"
+              value: "currency"
             - name: CARTSERVICE
-              value: "cartservice"
+              value: "cart"
             - name: TRACING_ENABLE
               value: "true"
             - name: TRACING_JAEGER_URL
@@ -55,11 +55,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: checkoutservice
+  name: checkout
 spec:
   type: ClusterIP
   selector:
-    app: checkoutservice
+    app: checkout
   ports:
     - name: grpc
       port: 5050

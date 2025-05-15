@@ -29,13 +29,13 @@ type JaegerConfig struct {
 
 var cfg *Config = &Config{
 	Address:               ":8090",
-	AdService:             "adservice",
-	CartService:           "cartservice",
-	CheckoutService:       "checkoutservice",
-	CurrencyService:       "currencyservice",
-	ProductCatalogService: "productcatalogservice",
-	RecommendationService: "recommendationservice",
-	ShippingService:       "shippingservice",
+	AdService:             "ad",
+	CartService:           "cart",
+	CheckoutService:       "checkout",
+	CurrencyService:       "currency",
+	ProductCatalogService: "productcatalog",
+	RecommendationService: "recommendation",
+	ShippingService:       "shipping",
 }
 
 func Get() Config {

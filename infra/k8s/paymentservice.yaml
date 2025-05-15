@@ -15,21 +15,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: paymentservice
+  name: payment
 spec:
   selector:
     matchLabels:
-      app: paymentservice
+      app: payment
   template:
     metadata:
       labels:
-        app: paymentservice
+        app: payment
     spec:
       serviceAccountName: go-micro 
       terminationGracePeriodSeconds: 5
       containers:
         - name: server
-          image: paymentservice
+          image: payment
           ports:
             - containerPort: 50051
           env:
@@ -58,11 +58,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: paymentservice
+  name: payment
 spec:
   type: ClusterIP
   selector:
-    app: paymentservice
+    app: payment
   ports:
     - name: grpc
       port: 50051

@@ -15,11 +15,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: checkoutservice
+  name: checkout
 spec:
   podSelector:
     matchLabels:
-      app: checkoutservice
+      app: checkout
   policyTypes:
   - Ingress
   - Egress
