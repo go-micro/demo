@@ -1,4 +1,4 @@
-# Go Micro Demo [![License](https://img.shields.io/:license-apache-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![GoDoc](https://godoc.org/github.com/go-micro/demo?status.svg)](https://godoc.org/github.com/go-micro/demo) [![Unit Tests](https://github.com/go-micro/demo/actions/workflows/ci.yml/badge.svg)](https://github.com/go-micro/demo/actions/workflows/ci.yml) [![Docker](https://github.com/go-micro/demo/actions/workflows/docker.yml/badge.svg)](https://github.com/go-micro/demo/actions/workflows/docker.yml)
+# Go Micro Demo [![License](https://img.shields.io/:license-apache-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![GoDoc](https://godoc.org/github.com/go-micro/demo?status.svg)](https://godoc.org/github.com/go-micro/demo)
 
 <p align="center">
 <img src="service/frontend/static/icons/Hipster_HeroLogoCyan.svg" width="300" alt="Online Boutique" />
